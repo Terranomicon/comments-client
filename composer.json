@@ -11,6 +11,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
+        "php": ">=7.3.0",
         "symfony/http-client": "^5.3"
     },
     "autoload": {
