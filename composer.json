@@ -9,7 +9,7 @@
             "email": "idzymi13@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "symfony/http-client": "^5.3"
     },
