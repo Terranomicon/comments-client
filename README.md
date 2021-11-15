@@ -1,4 +1,5 @@
 ##comments-client
+
 Установка:
 ```
 {
@@ -13,10 +14,11 @@
     ]
 }
 ```
+composer install
 ___
 Тестирование,
 ```
-
+make tests
 ```
 Использование:
 ```php
