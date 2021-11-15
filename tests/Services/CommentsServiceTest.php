@@ -28,9 +28,9 @@ class CommentsServiceTest extends TestCase
      * @throws ServerExceptionInterface
      * @throws JsonException
      */
-    public function testGetAllComments(array $expected)
+    public function testGetAllComments(array $data, array $expected)
     {
-        $mockResponseJson = json_encode($expected, JSON_THROW_ON_ERROR);
+        $mockResponseJson = json_encode($data, JSON_THROW_ON_ERROR);
         $mockResponse = new MockResponse($mockResponseJson, [
             'http_code' => 200,
             'response_headers' => ['Content-Type: application/json'],
@@ -40,23 +40,34 @@ class CommentsServiceTest extends TestCase
         $service = new CommentsService($httpClient);
 
         $responseData = $service->getAll();
-        $responseCheck = [['id' => $responseData[0]->getId(), 'name' => $responseData[0]->getName(), 'text' => $responseData[0]->getText()]];
         self::assertSame('GET', $mockResponse->getRequestMethod());
         self::assertSame('http://example.com/comments', $mockResponse->getRequestUrl());
-        self::assertSame($responseCheck, $expected);
+        self::assertEquals($expected, $responseData);
     }
 
     public function getAllDataProvider()
     {
         return [
             [
-                ['id' => 1, 'name' => 'Dima', 'text' => 'text']
+                ['data' =>
+                    [['id' => 1, 'name' => 'Dima', 'text' => 'text']]],
+                [new CommentEntity(1, 'Dima', 'text')]
             ],
             [
-                ['id' => 999, 'name' => 'Last', 'text' => 'text2']
+                ['data' => []],
+                []
             ],
             [
-                ['id' => null, 'name' => 'TestNull', 'text' => 'text3']
+                ['data' =>
+                    [
+                        ['id' => 5, 'name' => 'Test1', 'text' => 'text1'],
+                        ['id' => 6, 'name' => 'Test2', 'text' => 'text2'],
+                        ['id' => 7, 'name' => 'Test3', 'text' => 'text3'],
+                    ]],
+                [
+                    new CommentEntity(5, 'Test1', 'text1'),
+                    new CommentEntity(6, 'Test2', 'text2'),
+                    new CommentEntity(7, 'Test3', 'text3')]
             ]
         ];
     }
