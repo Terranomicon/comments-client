@@ -6,14 +6,12 @@ use Client\Entities\CommentEntity;
 use Client\Exception\ClientException;
 use Client\Services\CommentsService;
 use JsonException;
-use mysql_xdevapi\Exception;
 use Symfony\Component\HttpClient\Response\MockResponse;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 
@@ -74,12 +72,9 @@ class CommentsServiceTest extends TestCase
 
     /**
      * @dataProvider createDataProvider
+     * @param array $expected
      * @throws ClientException
-     * @throws ClientExceptionInterface
-     * @throws DecodingExceptionInterface
      * @throws JsonException
-     * @throws RedirectionExceptionInterface
-     * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
     public function testCreateComments(array $expected)
