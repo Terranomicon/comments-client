@@ -19,7 +19,6 @@ class CommentsService implements CommentsInterface
     public function __construct(HttpClientInterface $client)
     {
         $this->client = $client;
-//        $this->client = $client::withOptions(['base_uri' => 'https://example.com']);
     }
 
     /**
@@ -38,7 +37,11 @@ class CommentsService implements CommentsInterface
 
             $data = $response->toArray();
 
-            foreach ($data as $comment) {
+            if (empty($data['data'])) {
+                return [];
+            }
+
+            foreach ($data['data'] as $comment) {
                 $result[] = new CommentEntity($comment['id'], $comment['name'], $comment['text']);
             }
             return $result;
