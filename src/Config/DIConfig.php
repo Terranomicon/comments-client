@@ -15,7 +15,7 @@ class DIConfig
     {
         return [
             HttpClientInterface::class => function () {
-                return new Http();
+                return HttpClient::createForBaseUri('http://example.com/');
             },
             CommentsInterface::class => function (Container $container) {
                 return new CommentsService($container->get(HttpClientInterface::class));
